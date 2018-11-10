@@ -5,11 +5,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import com.example.quangchien.smartkid.data.GetData;
+
+import com.example.quangchien.smartkid.data.Image;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     Intent intent;
+    List<Image> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +27,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chosse_style);
         intent = new Intent(MainActivity.this,MyMusicService.class);
         startService(intent);
+        GetData data = new GetData();
+        list = data.getAllImage(); // câu lệnh này để e đưa cái list lên bỏ vô đây
+        try {
+            DataBaseHelper dataBaseHelper = new DataBaseHelper(this);
+            for (int i=0;i< list.size(); i++){
+                dataBaseHelper.saveImage(list.get(i).getName(), list.get(i).getImg()); //cái này là tên vs byte[] lấy
+                //từ từ thằng trong list của e nhé
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
 
     }
 
