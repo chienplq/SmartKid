@@ -2,6 +2,8 @@ package com.example.quangchien.smartkid;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -24,25 +26,33 @@ public class DifferentActivity extends AppCompatActivity {
     GridView gvImg;
     private static int INPUT = 1;
     int thutu = 0;
-    int [] img1 = {
-            R.drawable.sutu,R.drawable.ap_gau, R.drawable.khi, R.drawable.diff_voi, R.drawable.apply_chimcanhcut,
-            R.drawable.apply_meo, R.drawable.apply_cho,R.drawable.diff_khicon,R.drawable.diff_vet,R.drawable.diff_thocon,
-            R.drawable.diff_khicon,R.drawable.diff_heo,R.drawable.apply_huucaoco,R.drawable.apply_nai,R.drawable.apply_ngua,
-            R.drawable.diff_chocon
-    };
-    int [] img2 = {
-            R.drawable.khi,R.drawable.gautruc, R.drawable.chuottui,R.drawable.diff_voi1,R.drawable.diff_chimcanhcut
-            ,R.drawable.diff_meo1, R.drawable.dff_cho, R.drawable.diff_khicon1,R.drawable.diff_vet1,R.drawable.diff_thocon1,
-           R.drawable.diff_khicon1,R.drawable.diff_heo1,R.drawable.diff_huu1,R.drawable.diff_nai1, R.drawable.dff_ngua,
-            R.drawable.diff_chocon1
-    };
-    int[] img = {1,1,1,1,1,1,1,
-            1,1,1,1,1,1,1,
-            1,1,1,1,1,1,1,
-            1,1,1,1,1,1,1,
-            1,1,1,1,1,1,1,1
-
-    };
+    Bitmap[] source1 = {null, null, null, null, null, null};
+    Bitmap[] source2 = {null, null, null, null, null, null};
+    Bitmap[] source = {null, null, null, null, null, null,
+            null, null, null, null, null, null,
+            null, null, null, null, null, null,
+            null, null, null, null, null, null,
+            null, null, null, null, null, null,
+            null, null, null, null, null, null};
+//    int [] img1 = {
+//            R.drawable.sutu,R.drawable.ap_gau, R.drawable.khi, R.drawable.diff_voi, R.drawable.apply_chimcanhcut,
+//            R.drawable.apply_meo, R.drawable.apply_cho,R.drawable.diff_khicon,R.drawable.diff_vet,R.drawable.diff_thocon,
+//            R.drawable.diff_khicon,R.drawable.diff_heo,R.drawable.apply_huucaoco,R.drawable.apply_nai,R.drawable.apply_ngua,
+//            R.drawable.diff_chocon
+//    };
+//    int [] img2 = {
+//            R.drawable.khi,R.drawable.gautruc, R.drawable.chuottui,R.drawable.diff_voi1,R.drawable.diff_chimcanhcut
+//            ,R.drawable.diff_meo1, R.drawable.dff_cho, R.drawable.diff_khicon1,R.drawable.diff_vet1,R.drawable.diff_thocon1,
+//           R.drawable.diff_khicon1,R.drawable.diff_heo1,R.drawable.diff_huu1,R.drawable.diff_nai1, R.drawable.dff_ngua,
+//            R.drawable.diff_chocon1
+//    };
+//    int[] img = {1,1,1,1,1,1,1,
+//            1,1,1,1,1,1,1,
+//            1,1,1,1,1,1,1,
+//            1,1,1,1,1,1,1,
+//            1,1,1,1,1,1,1,1
+//
+//    };
 
 
 
@@ -52,6 +62,41 @@ public class DifferentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_different);
 
+        try {
+
+            DataBaseHelper dt = new DataBaseHelper(this);
+            Bitmap bitmap = BitmapFactory.decodeByteArray( dt.getImageById("diff_voi"),0, dt.getImageById("diff_voi").length);
+            source1[0] = bitmap;
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("diff_khicon"),0, dt.getImageById("diff_khicon").length);
+            source1[1] = bitmap;
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("diff_vet"),0, dt.getImageById("diff_vet").length);
+            source1[2] = bitmap;
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("diff_thocon"),0, dt.getImageById("diff_thocon").length);
+            source1[3] = bitmap;
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("diff_heo"),0, dt.getImageById("diff_heo").length);
+            source1[4] = bitmap;
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("diff_chocon"),0, dt.getImageById("diff_chocon").length);
+            source1[5] = bitmap;
+
+
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("diff_voi1"),0, dt.getImageById("diff_voi1").length);
+            source2[0] = bitmap;
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("diff_khicon1"),0, dt.getImageById("diff_khicon1").length);
+            source2[1] = bitmap;
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("diff_vet1"),0, dt.getImageById("diff_vet1").length);
+            source2[2] = bitmap;
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("diff_thocon1"),0, dt.getImageById("diff_thocon1").length);
+            source2[3] = bitmap;
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("diff_heo1"),0, dt.getImageById("diff_heo1").length);
+            source2[4] = bitmap;
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("diff_chocon1"),0, dt.getImageById("diff_chocon1").length);
+            source2[5] = bitmap;
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         changeImage();
 
         gvImg.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -59,7 +104,7 @@ public class DifferentActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 try {
-                    if(img[i] == img2[thutu]){
+                    if(source[i] == source2[thutu]){
                         thutu++;
                         changeImage();
 
@@ -76,17 +121,17 @@ public class DifferentActivity extends AppCompatActivity {
 
     public void changeImage(){
 
-        if(thutu <= img1.length){
-            for(int i = 0; i<= 35;i++){
-                img[i] = img1[thutu];
+        if(thutu <= source.length){
+            for(int i = 0; i< source.length;i++){
+                source[i] = source1[thutu];
             }
             Random r = new Random();
-            int n = r.nextInt(35);
+            int n = r.nextInt(source.length);
 
-            img[n] = img2[thutu];
+            source[n] = source2[thutu];
 
             gvImg = findViewById(R.id.gvImg);
-            final GridViewAdapter gridViewAdapter = new GridViewAdapter(this,img);
+            final GridViewAdapter gridViewAdapter = new GridViewAdapter(this, source);
             gvImg.setAdapter(gridViewAdapter);
         }else{
             Intent intent = new Intent(this,VictoryActivity.class);

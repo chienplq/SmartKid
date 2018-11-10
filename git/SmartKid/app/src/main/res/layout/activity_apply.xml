@@ -29,7 +29,7 @@
             android:id="@+id/img12"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/apply_tho"
+
             android:layout_weight="1"
             android:layout_marginBottom="5dp"
             />
@@ -38,7 +38,7 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/apply_ngua"
+
             android:layout_marginBottom="5dp"
             />
     </LinearLayout>
@@ -63,7 +63,7 @@
                 android:id="@+id/img1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/apply_tho1" />
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -78,7 +78,7 @@
                 android:id="@+id/img2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/apply_ngua1" />
+                 />
         </LinearLayout>
 
 
@@ -88,7 +88,6 @@
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/congrats"
         android:id="@+id/congra"
         android:visibility="gone"
         />

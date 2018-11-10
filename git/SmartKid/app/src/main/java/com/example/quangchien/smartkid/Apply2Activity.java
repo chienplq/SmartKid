@@ -2,6 +2,8 @@ package com.example.quangchien.smartkid;
 
 import android.content.ClipData;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -14,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
 public class Apply2Activity extends AppCompatActivity {
@@ -21,8 +24,20 @@ public class Apply2Activity extends AppCompatActivity {
     private static int INPUT = 1;
     LinearLayout target1,target;
     GifImageView anh1, anh2,anh3,anh4,anh11,anh22,anh33,anh44, congra;
+
     int flag = 0, thutu=0;
     Handler handler = new Handler();
+
+    byte[] win = null;
+    Bitmap[]  source= {null, null, null};
+    Bitmap[]  source1= {null, null, null};
+    Bitmap[]  source2= {null, null, null};
+    Bitmap[]  source3= {null, null, null};
+    byte[][] test1 = {null,null,null};
+    byte[][] test2 = { null,null,null};
+    byte[][] test3 =  {  null,null,null};
+    byte[][] test4 ={  null,null,null};
+    Bitmap anhNull = null;
 
     private Integer[] img1 = {R.drawable.ap_ca1,
             R.drawable.bo1,R.drawable.ap_cao1
@@ -54,6 +69,55 @@ public class Apply2Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        try {
+            DataBaseHelper dt = new DataBaseHelper(this);
+            Bitmap bitmap = BitmapFactory.decodeByteArray( dt.getImageById("ap_ca1"),0, dt.getImageById("ap_ca1").length);
+            test1[0]= dt.getImageById("ap_ca");
+            win = dt.getImageById("congrats");
+            source[0] = bitmap;
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("bo1"),0, dt.getImageById("bo1").length);
+
+            test1[1]= dt.getImageById("bo");
+            source[1] = bitmap;
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("anhnull"),0, dt.getImageById("anhnull").length);
+            anhNull = bitmap;
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("ap_cao1"),0, dt.getImageById("ap_cao1").length);
+            source[2] = bitmap;
+            test1[2]= dt.getImageById("ap_cao");
+
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("ap_gau1"),0, dt.getImageById("ap_gau1").length);
+            test2[0]= dt.getImageById("ap_gau");
+            source1[0] = bitmap;
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("ap_cavoi1"),0, dt.getImageById("ap_cavoi1").length);
+            test2[1]= dt.getImageById("ap_cavoi");
+            source1[1] = bitmap;
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("ap_cho1"),0, dt.getImageById("ap_cho1").length);
+            source1[2] = bitmap;
+            test2[2]= dt.getImageById("ap_cho");
+
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("ap_meo1"),0, dt.getImageById("ap_meo1").length);
+            test3[0]= dt.getImageById("ap_meo");
+            source2[0] = bitmap;
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("ap_voi1"),0, dt.getImageById("ap_voi1").length);
+            test3[1]= dt.getImageById("ap_voi");
+            source2[1] = bitmap;
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("ap_vet1"),0, dt.getImageById("ap_vet1").length);
+            source2[2] = bitmap;
+            test3[2]= dt.getImageById("ap_vet");
+
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("apply_huucaoco1"),0, dt.getImageById("apply_huucaoco1").length);
+            test4[0]= dt.getImageById("apply_huucaoco");
+            source3[0] = bitmap;
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("ap_gautruc1"),0, dt.getImageById("ap_gautruc1").length);
+            test4[1]= dt.getImageById("ap_gautruc");
+            source3[1] = bitmap;
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("apply_tho1"),0, dt.getImageById("apply_tho1").length);
+            source3[2] = bitmap;
+            test4[2]= dt.getImageById("apply_tho");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_apply2 );
@@ -61,6 +125,49 @@ public class Apply2Activity extends AppCompatActivity {
         mediaPlayerCach = MediaPlayer.create(Apply2Activity.this, R.raw.cach);
         mediaPlayeryeah = MediaPlayer.create(Apply2Activity.this, R.raw.yeah);
 
+        GifImageView im = (GifImageView) findViewById(R.id.img1);
+        try {
+            GifDrawable gif = new GifDrawable(test4[0]);
+            im.setImageDrawable(gif);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        im = (GifImageView) findViewById(R.id.img2);
+        try {
+            GifDrawable gif = new GifDrawable(test2[0]);
+            im.setImageDrawable(gif);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        im = (GifImageView) findViewById(R.id.img3);
+        try {
+            GifDrawable gif = new GifDrawable(test3[0]);
+            im.setImageDrawable(gif);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        im = (GifImageView) findViewById(R.id.img4);
+        try {
+            GifDrawable gif = new GifDrawable(test1[0]);
+            im.setImageDrawable(gif);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        im = (GifImageView) findViewById(R.id.congra);
+        try {
+            GifDrawable gif = new GifDrawable(win);
+            im.setImageDrawable(gif);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        im = (GifImageView) findViewById(R.id.img11);
+        im.setImageBitmap(source3[0]);
+        im = (GifImageView) findViewById(R.id.img22);
+        im.setImageBitmap(source1[0]);
+        im = (GifImageView) findViewById(R.id.img33);
+        im.setImageBitmap(source2[0]);
+        im = (GifImageView) findViewById(R.id.img44);
+        im.setImageBitmap(source[0]);
 
         anh1 = (GifImageView) findViewById(R.id.img1);
         anh2 = (GifImageView) findViewById(R.id.img2);
@@ -137,10 +244,15 @@ public class Apply2Activity extends AppCompatActivity {
                     if(view.getId() == R.id.img1 && v.getId() == R.id.img11){
 
                         mediaPlayerCach.start();
-                        final GifImageView im = (GifImageView) findViewById(R.id.img11);
-                        im.setImageResource(img8[thutu]);
+                        final  GifImageView im = (GifImageView) findViewById(R.id.img11);
+                        try {
+                            GifDrawable gif = new GifDrawable(test4[thutu]);
+                            im.setImageDrawable(gif);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                         final GifImageView im1 = (GifImageView) findViewById(R.id.img1);
-                        im1.setImageResource(R.drawable.anhnull);
+                       im1.setImageBitmap(anhNull);
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -168,10 +280,15 @@ public class Apply2Activity extends AppCompatActivity {
                     }else if(view.getId() == R.id.img2 && v.getId() == R.id.img22){
 
                         mediaPlayerCach.start();
-                        final GifImageView im = (GifImageView) findViewById(R.id.img22);
-                        im.setImageResource(img6[thutu]);
+                        final GifImageView  im = (GifImageView) findViewById(R.id.img22);
+                        try {
+                            GifDrawable gif = new GifDrawable(test2[thutu]);
+                            im.setImageDrawable(gif);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                         final GifImageView im1 = (GifImageView) findViewById(R.id.img2);
-                        im1.setImageResource(R.drawable.anhnull);
+                        im1.setImageBitmap(anhNull);
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -201,9 +318,14 @@ public class Apply2Activity extends AppCompatActivity {
 
                         mediaPlayerCach.start();
                         final GifImageView im = (GifImageView) findViewById(R.id.img33);
-                        im.setImageResource(img7[thutu]);
+                        try {
+                            GifDrawable gif = new GifDrawable(test3[thutu]);
+                            im.setImageDrawable(gif);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                         final GifImageView im1 = (GifImageView) findViewById(R.id.img3);
-                        im1.setImageResource(R.drawable.anhnull);
+                        im1.setImageBitmap(anhNull);
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -233,10 +355,15 @@ public class Apply2Activity extends AppCompatActivity {
                     }else if(view.getId() == R.id.img4 && v.getId() == R.id.img44){
 
                         mediaPlayerCach.start();
-                        final GifImageView im = (GifImageView) findViewById(R.id.img44);
-                        im.setImageResource(img5[thutu]);
+                        final GifImageView  im = (GifImageView) findViewById(R.id.img44);
+                        try {
+                            GifDrawable gif = new GifDrawable(test1[thutu]);
+                            im.setImageDrawable(gif);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                         final GifImageView im1 = (GifImageView) findViewById(R.id.img4);
-                        im1.setImageResource(R.drawable.anhnull);
+                        im1.setImageBitmap(anhNull);
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -282,15 +409,45 @@ public class Apply2Activity extends AppCompatActivity {
         congra = (GifImageView) findViewById(R.id.congra);
         congra.setVisibility(View.GONE);
 
-        if(thutu < img1.length) {
-            anh1.setImageResource(img8[thutu]);
-            anh2.setImageResource(img6[thutu]);
-            anh3.setImageResource(img7[thutu]);
-            anh4.setImageResource(img5[thutu]);
-            anh11.setImageResource(img4[thutu]);
-            anh22.setImageResource(img2[thutu]);
-            anh33.setImageResource(img3[thutu]);
-            anh44.setImageResource(img1[thutu]);
+        if(thutu < test1.length) {
+            GifImageView im = (GifImageView) findViewById(R.id.img1);
+            try {
+                GifDrawable gif = new GifDrawable(test4[thutu]);
+                im.setImageDrawable(gif);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            im = (GifImageView) findViewById(R.id.img2);
+            try {
+                GifDrawable gif = new GifDrawable(test2[thutu]);
+                im.setImageDrawable(gif);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            im = (GifImageView) findViewById(R.id.img3);
+            try {
+                GifDrawable gif = new GifDrawable(test3[thutu]);
+                im.setImageDrawable(gif);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            im = (GifImageView) findViewById(R.id.img4);
+            try {
+                GifDrawable gif = new GifDrawable(test1[thutu]);
+                im.setImageDrawable(gif);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            im = (GifImageView) findViewById(R.id.img11);
+            im.setImageBitmap(source3[thutu]);
+            im = (GifImageView) findViewById(R.id.img22);
+            im.setImageBitmap(source1[thutu]);
+            im = (GifImageView) findViewById(R.id.img33);
+            im.setImageBitmap(source2[thutu]);
+            im = (GifImageView) findViewById(R.id.img44);
+            im.setImageBitmap(source[thutu]);
+
         }else {
             Intent intent = new Intent(this,VictoryActivity.class);
             startActivityForResult(intent,INPUT);

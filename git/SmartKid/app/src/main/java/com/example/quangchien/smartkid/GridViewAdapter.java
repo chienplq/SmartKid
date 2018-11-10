@@ -1,6 +1,7 @@
 package com.example.quangchien.smartkid;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v4.view.LayoutInflaterFactory;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,16 +14,16 @@ import android.widget.ImageView;
 public class GridViewAdapter extends BaseAdapter {
 
     private Context context ;
-    private int[] img;
+    private Bitmap[] bitmap;
 
-    public GridViewAdapter(Context context, int[] img) {
+    public GridViewAdapter(Context context, Bitmap[] bitmaps) {
         this.context = context;
-        this.img = img;
+        this.bitmap = bitmaps;
     }
 
     @Override
     public int getCount() {
-        return img.length;
+        return bitmap.length;
     }
 
     @Override
@@ -40,7 +41,8 @@ public class GridViewAdapter extends BaseAdapter {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = layoutInflater.inflate(R.layout.gridview_row,null);
         ImageView imageView = (ImageView) view.findViewById(R.id.imgView);
-        imageView.setImageResource(img[i]);
+        imageView.setImageBitmap(bitmap[i]);
+
         return view;
     }
 }

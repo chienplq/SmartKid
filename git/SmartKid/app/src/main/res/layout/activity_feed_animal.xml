@@ -61,7 +61,7 @@
                 android:id="@+id/feedanimal_img_pikachuwish"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/feedanimal_banh" />
+                 />
         </LinearLayout>
 
         <LinearLayout
@@ -73,7 +73,12 @@
                 android:id="@+id/feedanimal_pikachu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/feedanimal_pikachu" />
+                 />
+            <!--<ImageView-->
+                <!--android:id="@+id/feedanimal_pikachu"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--/>-->
         </LinearLayout>
 
         <LinearLayout
@@ -113,7 +118,7 @@
                     android:id="@+id/feedanimal_thucan"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/feedanimal_banh" />
+                     />
             </LinearLayout>
 
             <LinearLayout
@@ -171,7 +176,7 @@
                 android:id="@+id/feedanimal_pony"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/feedanimal_pony" />
+                />
         </LinearLayout>
 
         <LinearLayout
