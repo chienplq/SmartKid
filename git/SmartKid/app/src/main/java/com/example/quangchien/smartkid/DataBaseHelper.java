@@ -97,6 +97,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         //Open the database
         String mypath = DB_PATH + DB_NAME;
         myDataBase = SQLiteDatabase.openDatabase(mypath, null, SQLiteDatabase.OPEN_READWRITE);
+
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -111,27 +112,57 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query("MazeActivity", new String[] {"Name","Image"}, "Name = ?", new String[] { id }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
+
         byte[] result = cursor.getBlob(1);
+        cursor.close();
+        db.close();
         return result;
     }
     public boolean checkValidImage(String id){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query("MazeActivity", new String[] {"Name","Image"}, "Name = ?", new String[] { id }, null, null, null, null);
-        return (cursor != null);
+
+        SQLiteDatabase sqldb = this.getReadableDatabase();
+
+
+        Cursor cursor = sqldb.rawQuery("Select Image from MazeActivity where Name = ?", new String[] {id} );
+        if(cursor == null){
+            cursor.close();
+            return true;
+        }
+        cursor.close();
+        sqldb.close();
+        return false ;
+
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor cursor = db.query("MazeActivity", new String[] {"Name","Image"}, "Name = ?", new String[] { id }, null, null, null, null);
+//        return (cursor != null);
     }
     public void insertImage(String name, byte[] image){
         SQLiteDatabase db=getWritableDatabase();
-        String sql="Insert into "+ DB_NAME+ " values (?,?)";
+        String sql="Insert into MazeActivity values (?,?)";
         SQLiteStatement statement=db.compileStatement(sql);
         statement.clearBindings();
         statement.bindString(1, name );
         statement.bindBlob(2, image);
         statement.executeInsert();
+        statement.close();
+        db.close();
     }
     public void updateImage(String name, byte[] image){
-        ContentValues cv = new ContentValues();
-        cv.put(name, image);
-        myDataBase.update("MazeActivity", cv, "Name = " + name , null);
+
+        SQLiteDatabase db=getWritableDatabase();
+        String sql="Update MazeActivity set Image = ? where Name =?";
+        SQLiteStatement statement=db.compileStatement(sql);
+        statement.clearBindings();
+        statement.bindString(2, name );
+        statement.bindBlob(1, image);
+        statement.executeInsert();
+        statement.close();
+        db.close();
+
+//        ContentValues cv = new ContentValues();
+//        cv.put("Image", image);
+//        myDataBase.update("MazeActivity", cv, "Name = " + name , new String[]{String.valueOf(image)});
+//        myDataBase.close();
 
     }
     public void saveImage(String name, byte[] image){
