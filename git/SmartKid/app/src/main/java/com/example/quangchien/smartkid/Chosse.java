@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import java.util.List;
+
 public class Chosse extends AppCompatActivity {
 
     int[] backGround = {R.drawable.animalbg, R.drawable.familybg, R.drawable.schoolbg};
     private int flag = 0;
-
+    List<String> list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +21,23 @@ public class Chosse extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         setContentView(R.layout.activity_main);
+        //phai viet truc tiep vo Main nen k tao class khac dc e nhe
+        list = list; // câu lệnh này để e đưa cái list lên bỏ vô đây
+        try {
+            DataBaseHelper dataBaseHelper = new DataBaseHelper(this);
+            for (int i=0;i< list.size(); i++){
+                dataBaseHelper.saveImage("sadsda", null); //cái này là tên vs byte[] lấy
+                //từ từ thằng trong list của e nhé
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+
+
+
+        //em viết vô phần a chừa trống này nha
     }
 
     public void ClickToMain(View view) {

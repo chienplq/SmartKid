@@ -10,7 +10,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     Intent intent;
-    List<String> list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,23 +19,7 @@ public class MainActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 
-//phai viet truc tiep vo Main nen k tao class khac dc e nhe
-        list = list; // câu lệnh này để e đưa cái list lên bỏ vô đây
-        try {
-            DataBaseHelper dataBaseHelper = new DataBaseHelper(this);
-            for (int i=0;i< list.size(); i++){
-            dataBaseHelper.saveImage("sadsda", null); //cái này là tên vs byte[] lấy
-                //từ từ thằng trong list của e nhé
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
 
-
-
-
-
-        //em viết vô phần a chừa trống này nha
         setContentView(R.layout.activity_chosse_style);
         intent = new Intent(MainActivity.this,MyMusicService.class);
         startService(intent);
