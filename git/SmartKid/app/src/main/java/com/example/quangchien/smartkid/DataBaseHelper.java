@@ -1,12 +1,14 @@
 package com.example.quangchien.smartkid;
 
 import android.annotation.TargetApi;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -112,14 +114,32 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         byte[] result = cursor.getBlob(1);
         return result;
     }
-    public String getImageById2(String id){
+    public boolean checkValidImage(String id){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query("testGame", new String[] {"Name","Image"}, "Name = ?", new String[] { id }, null, null, null, null);
-        if (cursor != null)
-            cursor.moveToFirst();
-        byte[] result = cursor.getBlob(0);
-        String abc = cursor.getString(0);
-        return abc;
+        Cursor cursor = db.query("MazeActivity", new String[] {"Name","Image"}, "Name = ?", new String[] { id }, null, null, null, null);
+        return (cursor != null);
+    }
+    public void insertImage(String name, byte[] image){
+        SQLiteDatabase db=getWritableDatabase();
+        String sql="Insert into "+ DB_NAME+ " values (?,?)";
+        SQLiteStatement statement=db.compileStatement(sql);
+        statement.clearBindings();
+        statement.bindString(1, name );
+        statement.bindBlob(2, image);
+        statement.executeInsert();
+    }
+    public void updateImage(String name, byte[] image){
+        ContentValues cv = new ContentValues();
+        cv.put(name, image);
+        myDataBase.update("MazeActivity", cv, "Name = " + name , null);
+
+    }
+    public void saveImage(String name, byte[] image){
+        if (checkValidImage(name)){
+            insertImage(name, image);
+        } else {
+            updateImage(name, image);
+        }
     }
     public Bitmap getBitmapbyID(String id) {
         Bitmap bm = BitmapFactory.decodeByteArray(getImageById(id), 0, getImageById(id).length);
