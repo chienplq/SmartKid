@@ -243,14 +243,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         statement.clearBindings();
         statement.bindString(1, time);
         statement.bindDouble(2, 1);
-        statement.bindDouble(3, 30);
+        statement.bindDouble(3, 30*60);
         statement.executeInsert();
         statement.close();
         db.close();
     }
     public void saveTime(String time){
         if (!checkTimeToday(time)){
-            setSumTime(time, getSumTime(time)+ 1);
+            setSumTime(time, getSumTime(time)+ 10);
         } else {
             insertNewDay(time);
         }

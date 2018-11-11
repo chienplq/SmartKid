@@ -29,7 +29,7 @@ public class Apply2Activity extends AppCompatActivity {
     LinearLayout target1,target;
     GifImageView anh1, anh2,anh3,anh4,anh11,anh22,anh33,anh44, congra;
     Timer T=new Timer();
-    int count =0;
+
     Boolean fl = true;
     int flag = 0, thutu=0;
     Handler handler = new Handler();
@@ -61,20 +61,17 @@ public class Apply2Activity extends AppCompatActivity {
                         @Override
                         public void run()
                         {if (fl) {
-                            if (count == 60) {
-                                dth.saveTime(getDate());
-                                count = 0;
-                                if (dth.geLimitTime(getDate())<=dth.getSumTime(getDate())){
-                                    block();
-                                }
+                            dth.saveTime(getDate());
+                            if (dth.geLimitTime(getDate())<=dth.getSumTime(getDate())){
+                                block();
                             }
-                            count++;
+
                         }
                         }
                     });
                 }
             };
-            T.scheduleAtFixedRate(abc,1000, 1000);
+            T.scheduleAtFixedRate(abc,10000, 10000);
         }
         catch (Exception e) {
             e.printStackTrace();

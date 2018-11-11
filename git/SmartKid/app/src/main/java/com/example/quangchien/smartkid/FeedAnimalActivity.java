@@ -30,7 +30,7 @@ public class FeedAnimalActivity extends AppCompatActivity {
     Bitmap[] source = {null, null, null, null, null, null, null, null};
     Bitmap[] source2 = {null, null};
     Timer T=new Timer();
-    int count =0;
+
     Boolean fl = true;
 //    int thucAnList[] = {R.drawable.feedanimal_banh, R.drawable.feedanimal_banhtroinuoc, R.drawable.feedanimal_banhtn,
 //            R.drawable.feedanimal_banhtn2, R.drawable.feedanimal_banhngot, R.drawable.feedanimal_banhngot2,
@@ -49,20 +49,17 @@ public class FeedAnimalActivity extends AppCompatActivity {
                         @Override
                         public void run()
                         {if (fl) {
-                            if (count == 60) {
-                                dth.saveTime(getDate());
-                                count = 0;
-                                if (dth.geLimitTime(getDate())<=dth.getSumTime(getDate())){
-                                    block();
-                                }
+                            dth.saveTime(getDate());
+                            if (dth.geLimitTime(getDate())<=dth.getSumTime(getDate())){
+                                block();
                             }
-                            count++;
+
                         }
                         }
                     });
                 }
             };
-            T.scheduleAtFixedRate(abc,1000, 1000);
+            T.scheduleAtFixedRate(abc,10000, 10000);
         }
         catch (Exception e) {
             e.printStackTrace();
