@@ -27,6 +27,7 @@ public class FeedAnimalActivity extends AppCompatActivity {
     int vanToc = 100;
     int flag = 0, soLan = 0;
     Handler handler = new Handler();
+    Bitmap home = null;
     Bitmap[] source = {null, null, null, null, null, null, null, null};
     Bitmap[] source2 = {null, null};
     Timer T=new Timer();
@@ -77,6 +78,8 @@ public class FeedAnimalActivity extends AppCompatActivity {
             DataBaseHelper dt = new DataBaseHelper(this);
             Bitmap bitmap = BitmapFactory.decodeByteArray( dt.getImageById("feedanimal_banh"),0, dt.getImageById("feedanimal_banh").length);
             source[0] = bitmap;
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("homebutton"),0, dt.getImageById("homebutton").length);
+            home = bitmap;
             bitmap = BitmapFactory.decodeByteArray( dt.getImageById("feedanimal_banhtroinuoc"),0, dt.getImageById("feedanimal_banhtroinuoc").length);
             source[1] = bitmap;
             bitmap = BitmapFactory.decodeByteArray( dt.getImageById("feedanimal_banhtn"),0, dt.getImageById("feedanimal_banhtn").length);
@@ -109,6 +112,8 @@ public class FeedAnimalActivity extends AppCompatActivity {
         imageView1.setImageBitmap(source[0]);
         imageView1 = findViewById(R.id.feedanimal_img_pikachuwish);
         imageView1.setImageBitmap(source[0]);
+        imageView1 = findViewById(R.id.back);
+        imageView1.setImageBitmap(home);
         LinearLayout ln1 = findViewById(R.id.feedanimal_layout_ponywish);
         ln1.setVisibility(View.INVISIBLE);
         ImageView imageView = findViewById(R.id.feedanimal_thucan);

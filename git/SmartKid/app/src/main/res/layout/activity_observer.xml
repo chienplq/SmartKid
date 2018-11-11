@@ -38,7 +38,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="clickToArrange"
-                    android:src="@drawable/prac_gau" />
+                    />
 
                 <TextView
                     android:id="@+id/textView1"
@@ -94,7 +94,7 @@
                 android:layout_width="69dp"
                 android:layout_height="98dp"
                 android:layout_gravity="center"
-                android:src="@drawable/plus"
+
 
                 />
 
@@ -135,7 +135,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="clickToApply"
-                    android:src="@drawable/ap_cao" />
+                    />
 
                 <TextView
                     android:id="@+id/textView2"

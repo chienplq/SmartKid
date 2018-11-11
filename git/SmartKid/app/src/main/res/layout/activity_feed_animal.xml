@@ -25,10 +25,11 @@
             android:layout_weight="1">
 
             <ImageView
+                android:id="@+id/back"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:onClick="ClickToFinish"
-                android:src="@drawable/homebutton" />
+                />
         </LinearLayout>
     </LinearLayout>
 

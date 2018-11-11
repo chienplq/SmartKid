@@ -23,6 +23,7 @@
         android:orientation="horizontal"
         android:layout_weight="0.2">
         <ImageView
+            android:id="@+id/back"
             android:layout_gravity="left"
             android:layout_width="0dp"
             android:layout_height="match_parent"

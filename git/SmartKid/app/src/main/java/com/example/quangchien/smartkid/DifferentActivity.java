@@ -36,6 +36,7 @@ public class DifferentActivity extends AppCompatActivity {
     Timer T=new Timer();
     int count =0;
     Boolean fl = true;
+    Bitmap home = null;
     Bitmap[] source1 = {null, null, null, null, null, null};
     Bitmap[] source2 = {null, null, null, null, null, null};
     Bitmap[] source = {null, null, null, null, null, null,
@@ -100,6 +101,8 @@ public class DifferentActivity extends AppCompatActivity {
             DataBaseHelper dt = new DataBaseHelper(this);
             Bitmap bitmap = BitmapFactory.decodeByteArray( dt.getImageById("diff_voi"),0, dt.getImageById("diff_voi").length);
             source1[0] = bitmap;
+            bitmap = BitmapFactory.decodeByteArray( dt.getImageById("homebutton"),0, dt.getImageById("homebutton").length);
+            home = bitmap;
             bitmap = BitmapFactory.decodeByteArray( dt.getImageById("diff_khicon"),0, dt.getImageById("diff_khicon").length);
             source1[1] = bitmap;
             bitmap = BitmapFactory.decodeByteArray( dt.getImageById("diff_vet"),0, dt.getImageById("diff_vet").length);
