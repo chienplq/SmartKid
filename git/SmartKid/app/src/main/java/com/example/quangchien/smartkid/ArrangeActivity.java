@@ -326,10 +326,6 @@ public class ArrangeActivity extends AppCompatActivity {
 //        }
     };
 
-    public void man2() {
-        Intent intent = new Intent(this, Arrange2Activity.class);
-        startActivity(intent);
-    }
 
     public void changeImage(){
         order++;
