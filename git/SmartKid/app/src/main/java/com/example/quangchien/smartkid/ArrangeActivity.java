@@ -12,9 +12,16 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import pl.droidsonroids.gif.GifImageView;
 
 public class ArrangeActivity extends AppCompatActivity {
+    Timer T=new Timer();
+    int count =0;
+    Boolean fl = true;
     ImageView gau1, gau2, gau3, gau4, gaua, gaub, gauc, gaud, st1, st2, st3, st4, sta, stb, stc, std;
     GifImageView chochay, mew;
     int order;
@@ -49,6 +56,35 @@ public class ArrangeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            final DataBaseHelper dth = new DataBaseHelper(this);
+            TimerTask abc =new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {if (fl) {
+
+                            if (count == 60) {
+                                dth.saveTime(getDate());
+                                count = 0;
+                                if (dth.geLimitTime(getDate())<=dth.getSumTime(getDate())){
+                                    block();
+                                }
+                            }
+                            count++;
+                        }
+                        }
+                    });
+                }
+            };
+            T.scheduleAtFixedRate(abc,1000, 1000);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_arrange);
@@ -326,10 +362,6 @@ public class ArrangeActivity extends AppCompatActivity {
 //        }
     };
 
-    public void man2() {
-        Intent intent = new Intent(this, Arrange2Activity.class);
-        startActivity(intent);
-    }
 
     public void changeImage(){
         order++;
@@ -380,5 +412,27 @@ public class ArrangeActivity extends AppCompatActivity {
         }else {
             finish();
         }
+    }
+    public String getDate(){
+        Date today = new Date();
+        int abc = today.getYear();
+        return (today.getDate()+"/" +today.getMonth()+"/"+today.getYear());
+    }
+    public void block() {
+        Intent intent = new Intent(this, SetTimePlay.class);
+        startActivity(intent);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fl= true;
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        fl =false;
+
     }
 }

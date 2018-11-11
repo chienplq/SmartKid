@@ -13,6 +13,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.graphics.Bitmap;
+
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MazeActivity extends AppCompatActivity {
     private static int INPUT = 1;
     GestureDetector gestureDetector;
@@ -82,6 +87,9 @@ public class MazeActivity extends AppCompatActivity {
             {1, 1, 1, 1, 1, 1, 1, 1}
 
     };
+    Timer T=new Timer();
+    int count =0;
+    Boolean fl = true;
 
     Bitmap[] source = {null, null, null, null, null, null, null, null};
     String flagChangeSource = "";
@@ -89,6 +97,35 @@ public class MazeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            final DataBaseHelper dth = new DataBaseHelper(this);
+            TimerTask abc =new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {if (fl) {
+
+                            if (count == 60) {
+                                dth.saveTime(getDate());
+                                count = 0;
+                                if (dth.geLimitTime(getDate())<=dth.getSumTime(getDate())){
+                                    block();
+                                }
+                            }
+                            count++;
+                        }
+                        }
+                    });
+                }
+            };
+            T.scheduleAtFixedRate(abc,1000, 1000);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         try {
             DataBaseHelper dt = new DataBaseHelper(this);
             Bitmap bitmap = BitmapFactory.decodeByteArray( dt.getImageById("conkhimaze"),0, dt.getImageById("conkhimaze").length);
@@ -496,5 +533,27 @@ public class MazeActivity extends AppCompatActivity {
             img = findViewById(R.id.maze67);
             img.setImageBitmap(source[3]);//img.setImageResource(R.drawable.maze_naichuoi);
         }
+    }
+    public String getDate(){
+        Date today = new Date();
+        int abc = today.getYear();
+        return (today.getDate()+"/" +today.getMonth()+"/"+today.getYear());
+    }
+    public void block() {
+        Intent intent = new Intent(this, SetTimePlay.class);
+        startActivity(intent);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fl= true;
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        fl =false;
+
     }
 }

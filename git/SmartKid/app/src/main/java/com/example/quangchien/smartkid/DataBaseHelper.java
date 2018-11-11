@@ -97,6 +97,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         //Open the database
         String mypath = DB_PATH + DB_NAME;
         myDataBase = SQLiteDatabase.openDatabase(mypath, null, SQLiteDatabase.OPEN_READWRITE);
+
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -111,27 +112,69 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query("MazeActivity", new String[] {"Name","Image"}, "Name = ?", new String[] { id }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
+
         byte[] result = cursor.getBlob(1);
+        cursor.close();
+        db.close();
         return result;
     }
     public boolean checkValidImage(String id){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query("MazeActivity", new String[] {"Name","Image"}, "Name = ?", new String[] { id }, null, null, null, null);
-        return (cursor != null);
+
+        SQLiteDatabase sqldb = this.getReadableDatabase();
+
+
+        Cursor cursor = sqldb.rawQuery("Select Image from MazeActivity where Name = ?", new String[] {id} );
+        if(cursor == null){
+            cursor.close();
+            return true;
+        }
+        cursor.close();
+        sqldb.close();
+        return false ;
+
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor cursor = db.query("MazeActivity", new String[] {"Name","Image"}, "Name = ?", new String[] { id }, null, null, null, null);
+//        return (cursor != null);
     }
     public void insertImage(String name, byte[] image){
         SQLiteDatabase db=getWritableDatabase();
-        String sql="Insert into "+ DB_NAME+ " values (?,?)";
-        SQLiteStatement statement = db.compileStatement(sql);
+//<<<<<<< HEAD
+//        String sql="Insert into "+ DB_NAME+ " values (?,?)";
+//        SQLiteStatement statement = db.compileStatement(sql);
+//=======
+        String sql="Insert into MazeActivity values (?,?)";
+        SQLiteStatement statement=db.compileStatement(sql);
+//>>>>>>> 223a86e2c64e3fa1972cc7f512bc417b07b5f556
         statement.clearBindings();
         statement.bindString(1, name );
         statement.bindBlob(2, image);
         statement.executeInsert();
+        statement.close();
+        db.close();
     }
     public void updateImage(String name, byte[] image){
-        ContentValues cv = new ContentValues();
-        cv.put("Image", image);
-        myDataBase.update("MazeActivity", cv, "Name = " + name , null);
+//<<<<<<< HEAD
+//        ContentValues cv = new ContentValues();
+//        cv.put("Image", image);
+//        myDataBase.update("MazeActivity", cv, "Name = " + name , null);
+//=======
+
+        SQLiteDatabase db=getWritableDatabase();
+        String sql="Update MazeActivity set Image = ? where Name =?";
+        SQLiteStatement statement=db.compileStatement(sql);
+        statement.clearBindings();
+        statement.bindString(2, name );
+        statement.bindBlob(1, image);
+        statement.executeInsert();
+        statement.close();
+        db.close();
+
+//        ContentValues cv = new ContentValues();
+//        cv.put("Image", image);
+//        myDataBase.update("MazeActivity", cv, "Name = " + name , new String[]{String.valueOf(image)});
+//        myDataBase.close();
+
+//>>>>>>> 223a86e2c64e3fa1972cc7f512bc417b07b5f556
     }
     public void saveImage(String name, byte[] image){
         if (checkValidImage(name)){
@@ -141,50 +184,74 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
     public boolean checkTimeToday(String time){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query("countTime", new String[] {"MyDay"}, "MyDay = ?", new String[] { time }, null, null, null, null);
-        return (cursor != null);
+        SQLiteDatabase sqldb = this.getReadableDatabase();
+
+
+        Cursor cursor = sqldb.rawQuery("Select Myday from countTime where MyDay = ?", new String[] {time} );
+        if(cursor.getCount() == 0){
+            cursor.close();
+            return true;
+        }
+        cursor.close();
+        sqldb.close();
+        return false ;
     }
     public int getSumTime(String time){
 
-        if (!checkTimeToday(time)) insertNewDay(time); ;
+        if (checkTimeToday(time)) insertNewDay(time); ;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query("countTime", new String[] {"SumTimeToday"}, "MyDay = ?", new String[] { time }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
-        return (cursor.getInt(0));
+        int abc = cursor.getInt(0);
+        return abc;
     }
     public int geLimitTime(String time){
 
-        if (!checkTimeToday(time)) insertNewDay(time); ;
+        if (checkTimeToday(time)) insertNewDay(time); ;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query("countTime", new String[] {"Limit"}, "MyDay = ?", new String[] { time }, null, null, null, null);
+        Cursor cursor = db.query("countTime", new String[] {"LimitTimeToday"}, "MyDay = ?", new String[] { time }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
-        return (cursor.getInt(0));
+        int abc = cursor.getInt(0);
+        return abc;
     }
     public void setSumTime(String time, int timeToday){
-        ContentValues cv = new ContentValues();
-        cv.put("SumTimeToday", timeToday);
-        myDataBase.update("countTime", cv, "MyDay = " + time , null);
+        SQLiteDatabase db=getWritableDatabase();
+        String sql="Update countTime set SumTimeToday = ? where MyDay =?";
+        SQLiteStatement statement=db.compileStatement(sql);
+        statement.clearBindings();
+        statement.bindString(2, time );
+        statement.bindDouble(1, timeToday);
+        statement.executeUpdateDelete();
+        statement.close();
+        db.close();
     }
     public void setLimitTime(String time, int limit){
-        ContentValues cv = new ContentValues();
-        cv.put("Limit", limit);
-        myDataBase.update("countTime", cv, "MyDay = " + time , null);
+        SQLiteDatabase db=getWritableDatabase();
+        String sql="Update countTime set LimitTimeToday = ? where MyDay =?";
+        SQLiteStatement statement=db.compileStatement(sql);
+        statement.clearBindings();
+        statement.bindString(2, time );
+        statement.bindDouble(1, limit);
+        statement.executeUpdateDelete();
+        statement.close();
+        db.close();
     }
     public void insertNewDay(String time){
         SQLiteDatabase db=getWritableDatabase();
-        String sql="Insert into "+ DB_NAME+ " values (?,?,?)";
+        String sql="Insert into countTime values (?,?,?)";
         SQLiteStatement statement = db.compileStatement(sql);
         statement.clearBindings();
         statement.bindString(1, time);
         statement.bindDouble(2, 1);
         statement.bindDouble(3, 30);
         statement.executeInsert();
+        statement.close();
+        db.close();
     }
     public void saveTime(String time){
-        if (checkTimeToday(time)){
+        if (!checkTimeToday(time)){
             setSumTime(time, getSumTime(time)+ 1);
         } else {
             insertNewDay(time);

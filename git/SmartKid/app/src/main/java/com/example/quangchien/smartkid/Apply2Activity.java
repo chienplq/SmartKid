@@ -16,6 +16,10 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
@@ -24,7 +28,9 @@ public class Apply2Activity extends AppCompatActivity {
     private static int INPUT = 1;
     LinearLayout target1,target;
     GifImageView anh1, anh2,anh3,anh4,anh11,anh22,anh33,anh44, congra;
-
+    Timer T=new Timer();
+    int count =0;
+    Boolean fl = true;
     int flag = 0, thutu=0;
     Handler handler = new Handler();
 
@@ -39,37 +45,40 @@ public class Apply2Activity extends AppCompatActivity {
     byte[][] test4 ={  null,null,null};
     Bitmap anhNull = null;
 
-    private Integer[] img1 = {R.drawable.ap_ca1,
-            R.drawable.bo1,R.drawable.ap_cao1
-    };
-    private Integer[] img2 = {R.drawable.ap_gau1,R.drawable.ap_cavoi1,R.drawable.ap_cho1
-    };
 
-    private Integer[] img3 = {R.drawable.ap_meo1,
-            R.drawable.ap_voi1,R.drawable.ap_vet1
-    };
-    private Integer[] img4 = {R.drawable.apply_huucaoco1,R.drawable.ap_gautruc1,R.drawable.apply_tho1
-    };
-
-    private Integer[] img5 = {R.drawable.ap_ca,
-            R.drawable.bo,R.drawable.ap_cao
-    };
-
-    private Integer[] img6 = {R.drawable.ap_gau,R.drawable.ap_cavoi,R.drawable.ap_cho
-    };
-
-    private Integer[] img7 = {R.drawable.ap_meo,
-            R.drawable.ap_voi,R.drawable.ap_vet
-    };
-
-    private Integer[] img8 = {R.drawable.apply_huucaoco,R.drawable.ap_gautruc,R.drawable.apply_tho
-    };
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        try {
+            final DataBaseHelper dth = new DataBaseHelper(this);
+            TimerTask abc =new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {if (fl) {
+                            if (count == 60) {
+                                dth.saveTime(getDate());
+                                count = 0;
+                                if (dth.geLimitTime(getDate())<=dth.getSumTime(getDate())){
+                                    block();
+                                }
+                            }
+                            count++;
+                        }
+                        }
+                    });
+                }
+            };
+            T.scheduleAtFixedRate(abc,1000, 1000);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         try {
             DataBaseHelper dt = new DataBaseHelper(this);
             Bitmap bitmap = BitmapFactory.decodeByteArray( dt.getImageById("ap_ca1"),0, dt.getImageById("ap_ca1").length);
@@ -77,7 +86,6 @@ public class Apply2Activity extends AppCompatActivity {
             win = dt.getImageById("congrats");
             source[0] = bitmap;
             bitmap = BitmapFactory.decodeByteArray( dt.getImageById("bo1"),0, dt.getImageById("bo1").length);
-
             test1[1]= dt.getImageById("bo");
             source[1] = bitmap;
             bitmap = BitmapFactory.decodeByteArray( dt.getImageById("anhnull"),0, dt.getImageById("anhnull").length);
@@ -482,6 +490,7 @@ public class Apply2Activity extends AppCompatActivity {
     };
     protected void onStop() {
         super.onStop();
+        fl =false;
         Intent intent = new Intent(Apply2Activity.this,MyMusicService.class);
         if(intent == null){
             startService(intent);
@@ -499,4 +508,21 @@ public class Apply2Activity extends AppCompatActivity {
             }
         }
     }
+    public String getDate(){
+        Date today = new Date();
+        int abc = today.getYear();
+        return (today.getDate()+"/" +today.getMonth()+"/"+today.getYear());
+    }
+    public void block() {
+        Intent intent = new Intent(this, SetTimePlay.class);
+        startActivity(intent);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fl= true;
+    }
+
+
+
 }

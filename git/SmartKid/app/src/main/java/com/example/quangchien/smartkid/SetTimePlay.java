@@ -18,6 +18,7 @@ public class SetTimePlay extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_time_play);
+        sai();
         try {
             DataBaseHelper dth = new DataBaseHelper(this);
             TextView played = findViewById(R.id.played);
@@ -33,13 +34,14 @@ public class SetTimePlay extends AppCompatActivity {
 
     public void clickToConfirm(View view) {
         EditText edt = findViewById(R.id.edtAnswer);
+        String z = edt.getText().toString();
         int sum = a+b;
-        if (edt.getText().equals(sum+""))
+        if (z.equals(sum+""))
         {
             try {
                 DataBaseHelper dth = new DataBaseHelper(this);
                 EditText edt1= findViewById(R.id.tgchoi);
-                int num = Integer.parseInt(edt1.toString()) ;
+                int num = Integer.parseInt(edt1.getText().toString()) ;
                 dth.setLimitTime(getDate(),num);
 
             } catch (Exception e) {

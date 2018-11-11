@@ -17,8 +17,11 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import pl.droidsonroids.gif.GifImageView;
 
@@ -26,6 +29,9 @@ public class DifferentActivity extends AppCompatActivity {
     GridView gvImg;
     private static int INPUT = 1;
     int thutu = 0;
+    Timer T=new Timer();
+    int count =0;
+    Boolean fl = true;
     Bitmap[] source1 = {null, null, null, null, null, null};
     Bitmap[] source2 = {null, null, null, null, null, null};
     Bitmap[] source = {null, null, null, null, null, null,
@@ -61,7 +67,35 @@ public class DifferentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_different);
+        try {
+            final DataBaseHelper dth = new DataBaseHelper(this);
+            TimerTask abc =new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {if (fl) {
 
+                            if (count == 60) {
+                                dth.saveTime(getDate());
+                                count = 0;
+                                if (dth.geLimitTime(getDate())<=dth.getSumTime(getDate())){
+                                    block();
+                                }
+                            }
+                            count++;
+                        }
+                        }
+                    });
+                }
+            };
+            T.scheduleAtFixedRate(abc,1000, 1000);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         try {
 
             DataBaseHelper dt = new DataBaseHelper(this);
@@ -152,5 +186,27 @@ public class DifferentActivity extends AppCompatActivity {
 
     public void clickToHome(View view) {
         finish();
+    }
+    public String getDate(){
+        Date today = new Date();
+        int abc = today.getYear();
+        return (today.getDate()+"/" +today.getMonth()+"/"+today.getYear());
+    }
+    public void block() {
+        Intent intent = new Intent(this, SetTimePlay.class);
+        startActivity(intent);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fl= true;
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        fl =false;
+
     }
 }
