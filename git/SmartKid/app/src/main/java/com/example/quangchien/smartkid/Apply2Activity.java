@@ -39,31 +39,7 @@ public class Apply2Activity extends AppCompatActivity {
     byte[][] test4 ={  null,null,null};
     Bitmap anhNull = null;
 
-    private Integer[] img1 = {R.drawable.ap_ca1,
-            R.drawable.bo1,R.drawable.ap_cao1
-    };
-    private Integer[] img2 = {R.drawable.ap_gau1,R.drawable.ap_cavoi1,R.drawable.ap_cho1
-    };
 
-    private Integer[] img3 = {R.drawable.ap_meo1,
-            R.drawable.ap_voi1,R.drawable.ap_vet1
-    };
-    private Integer[] img4 = {R.drawable.apply_huucaoco1,R.drawable.ap_gautruc1,R.drawable.apply_tho1
-    };
-
-    private Integer[] img5 = {R.drawable.ap_ca,
-            R.drawable.bo,R.drawable.ap_cao
-    };
-
-    private Integer[] img6 = {R.drawable.ap_gau,R.drawable.ap_cavoi,R.drawable.ap_cho
-    };
-
-    private Integer[] img7 = {R.drawable.ap_meo,
-            R.drawable.ap_voi,R.drawable.ap_vet
-    };
-
-    private Integer[] img8 = {R.drawable.apply_huucaoco,R.drawable.ap_gautruc,R.drawable.apply_tho
-    };
 
 
     @Override
@@ -77,7 +53,6 @@ public class Apply2Activity extends AppCompatActivity {
             win = dt.getImageById("congrats");
             source[0] = bitmap;
             bitmap = BitmapFactory.decodeByteArray( dt.getImageById("bo1"),0, dt.getImageById("bo1").length);
-
             test1[1]= dt.getImageById("bo");
             source[1] = bitmap;
             bitmap = BitmapFactory.decodeByteArray( dt.getImageById("anhnull"),0, dt.getImageById("anhnull").length);
