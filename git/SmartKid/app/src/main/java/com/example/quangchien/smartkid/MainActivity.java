@@ -1,6 +1,9 @@
 package com.example.quangchien.smartkid;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
+        if(isOnline()){
         GetData data = new GetData();
         list = data.getAllImage(); // câu lệnh này để e đưa cái list lên bỏ vô đây
         try {
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }catch (Exception e){
             e.printStackTrace();
-        }
+        }}
 
         setContentView(R.layout.activity_chosse_style);
         intent = new Intent(MainActivity.this,MyMusicService.class);
@@ -62,5 +65,16 @@ public class MainActivity extends AppCompatActivity {
     public void clickToPractice(View view) {
         Intent intent = new Intent(this,PracticeActivity.class);
         startActivity(intent);
+    }
+    public boolean isOnline() {
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
+
+        if(networkInfo != null && networkInfo.isConnectedOrConnecting()){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
