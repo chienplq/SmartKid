@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/o_nen"
     tools:context=".SetTimePlay">
 
     <LinearLayout
@@ -12,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"></LinearLayout>
     <LinearLayout
-        android:layout_weight="3"
+        android:layout_weight="5"
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_height="0dp">
@@ -39,6 +40,9 @@
            <TextView
                android:id="@+id/played"
                android:text="Hôm nay đã chơi: 0 phút"
+               android:fontFamily="@font/ballo"
+               android:textSize="25dp"
+               android:textColor="#FF6600"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content" />
        </LinearLayout>
@@ -49,44 +53,61 @@
                     android:layout_height="0dp">
                     <TextView
                         android:text="Hôm nay được chơi:"
+                        android:textSize="25dp"
+                        android:fontFamily="@font/ballo"
+                        android:textColor="#FF6600"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <EditText
                         android:id="@+id/tgchoi"
                         android:digits="0123456789"
+                        android:textColor="#ff0006"
                         android:inputType="numberDecimal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <TextView
                         android:text="phút"
+                        android:fontFamily="@font/ballo"
+                        android:textSize="25dp"
+                        android:textColor="#FF6600"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
             </LinearLayout>
             <LinearLayout
-                android:layout_weight="3"
+                android:layout_weight="5"
                 android:layout_width="match_parent"
                 android:orientation="vertical"
                 android:gravity="center"
                 android:layout_height="0dp">
                 <TextView
+                    android:fontFamily="@font/ballo"
                     android:text="Xác nhận phụ huynh: "
+                    android:textSize="25dp"
+                    android:textColor="#FF6600"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/txtMath"
+                    android:fontFamily="@font/ballo"
                     android:text="Giải bài toán"
+                    android:textSize="25dp"
+                    android:textColor="#FF6600"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <EditText
                     android:id="@+id/edtAnswer"
                     android:layout_width="100dp"
                     android:digits="0123456789"
+                    android:textColor="#ff0006"
                     android:inputType="numberDecimal"
                     android:layout_height="wrap_content" />
                 <Button
                     android:text="Xác nhận "
+                    android:textSize="25dp"
+                    android:textColor="#ff0006"
+                    android:fontFamily="@font/ballo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="clickToConfirm"/>

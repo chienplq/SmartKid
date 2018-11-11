@@ -202,6 +202,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
         int abc = cursor.getInt(0);
+        cursor.close();
+        db.close();
         return abc;
     }
     public int geLimitTime(String time){
@@ -212,6 +214,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
         int abc = cursor.getInt(0);
+        cursor.close();
+        db.close();
         return abc;
     }
     public void setSumTime(String time, int timeToday){

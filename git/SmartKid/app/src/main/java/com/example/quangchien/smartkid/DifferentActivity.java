@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -136,7 +137,7 @@ public class DifferentActivity extends AppCompatActivity {
         gvImg.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                MediaPlayer  mediaPlayerCach = MediaPlayer.create(DifferentActivity.this, R.raw.cach);
                 try {
                     if(source[i] == source2[thutu]){
                         thutu++;
