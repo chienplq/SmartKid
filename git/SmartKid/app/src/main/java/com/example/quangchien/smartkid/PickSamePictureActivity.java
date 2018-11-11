@@ -1,5 +1,6 @@
 package com.example.quangchien.smartkid;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
@@ -8,11 +9,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import java.util.Date;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import pl.droidsonroids.gif.GifImageView;
 
 public class PickSamePictureActivity extends AppCompatActivity {
+    Timer T=new Timer();
+    int count =0;
+    Boolean fl = true;
     Bitmap anhBia = null;
     Bitmap anhNen = null;
     Bitmap[] source = {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null};
@@ -26,6 +33,35 @@ public class PickSamePictureActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            final DataBaseHelper dth = new DataBaseHelper(this);
+            TimerTask abc =new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {if (fl) {
+
+                            if (count == 60) {
+                                dth.saveTime(getDate());
+                                count = 0;
+                                if (dth.geLimitTime(getDate())<=dth.getSumTime(getDate())){
+                                    block();
+                                }
+                            }
+                            count++;
+                        }
+                        }
+                    });
+                }
+            };
+            T.scheduleAtFixedRate(abc,1000, 1000);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         try {
             DataBaseHelper dt = new DataBaseHelper(this);
             Bitmap bitmap = BitmapFactory.decodeByteArray(dt.getImageById("trucxinh_a0"), 0, dt.getImageById("trucxinh_a0").length);
@@ -160,6 +196,27 @@ public class PickSamePictureActivity extends AppCompatActivity {
             }
 
         }
+
+    }
+    public String getDate(){
+        Date today = new Date();
+        int abc = today.getYear();
+        return (today.getDate()+"/" +today.getMonth()+"/"+today.getYear());
+    }
+    public void block() {
+        Intent intent = new Intent(this, SetTimePlay.class);
+        startActivity(intent);
+    }
+    protected void onResume() {
+        super.onResume();
+        fl= true;
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        fl =false;
 
     }
 }

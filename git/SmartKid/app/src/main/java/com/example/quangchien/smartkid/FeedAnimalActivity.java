@@ -1,5 +1,6 @@
 package com.example.quangchien.smartkid;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
@@ -13,7 +14,10 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import java.util.Date;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import pl.droidsonroids.gif.GifImageView;
 
@@ -25,7 +29,9 @@ public class FeedAnimalActivity extends AppCompatActivity {
     Handler handler = new Handler();
     Bitmap[] source = {null, null, null, null, null, null, null, null};
     Bitmap[] source2 = {null, null};
-
+    Timer T=new Timer();
+    int count =0;
+    Boolean fl = true;
 //    int thucAnList[] = {R.drawable.feedanimal_banh, R.drawable.feedanimal_banhtroinuoc, R.drawable.feedanimal_banhtn,
 //            R.drawable.feedanimal_banhtn2, R.drawable.feedanimal_banhngot, R.drawable.feedanimal_banhngot2,
 //            R.drawable.feedanimal_banhngot3, R.drawable.feedanimal_banhngot4};
@@ -33,6 +39,34 @@ public class FeedAnimalActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            final DataBaseHelper dth = new DataBaseHelper(this);
+            TimerTask abc =new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {if (fl) {
+                            if (count == 60) {
+                                dth.saveTime(getDate());
+                                count = 0;
+                                if (dth.geLimitTime(getDate())<=dth.getSumTime(getDate())){
+                                    block();
+                                }
+                            }
+                            count++;
+                        }
+                        }
+                    });
+                }
+            };
+            T.scheduleAtFixedRate(abc,1000, 1000);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 //        getWindow().addFlags(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
@@ -171,6 +205,28 @@ public class FeedAnimalActivity extends AppCompatActivity {
     }
     public void impotImage(){
 
+
+    }
+    public String getDate(){
+        Date today = new Date();
+        int abc = today.getYear();
+        return (today.getDate()+"/" +today.getMonth()+"/"+today.getYear());
+    }
+    public void block() {
+        Intent intent = new Intent(this, SetTimePlay.class);
+        startActivity(intent);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fl= true;
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        fl =false;
 
     }
 }

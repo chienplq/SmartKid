@@ -14,6 +14,7 @@ public class Chosse extends AppCompatActivity {
     int[] backGround = {R.drawable.animalbg, R.drawable.familybg, R.drawable.schoolbg};
     private int flag = 0;
     List<String> list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,5 +69,10 @@ public class Chosse extends AppCompatActivity {
             ImageView img = findViewById(R.id.imStyle);
             img.setImageResource(backGround[flag]);
         }
+    }
+
+    public void clickToSetting(View view) {
+        Intent intent = new Intent(this, SetTimePlay.class);
+        startActivity(intent);
     }
 }

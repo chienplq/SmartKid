@@ -18,6 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
@@ -30,19 +34,56 @@ public class ApplyActivity extends AppCompatActivity {
     Handler handler = new Handler();
     Bitmap[] source = {null, null, null};
     byte[] test = null, test1 = null, test3 = null;
-
+    Timer T=new Timer();
+    int count =0;
+    Boolean fl = true;
     @Override
     protected void onStop() {
+        fl =false;
         super.onStop();
         Intent intent = new Intent(ApplyActivity.this, MyMusicService.class);
         if (intent == null) {
             startService(intent);
         }
     }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fl= true;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            final DataBaseHelper dth = new DataBaseHelper(this);
+            TimerTask abc =new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {if (fl) {
+                            if (count%5==0){
+                                if (dth.geLimitTime(getDate())<=dth.getSumTime(getDate())){
+                                    block();
+                                }
+                            }
+                            if (count == 60) {
+                                dth.saveTime(getDate());
+                                count = 0;
+                            }
+                            count++;
+                        }
+                        }
+                    });
+                }
+            };
+            T.scheduleAtFixedRate(abc,1000, 1000);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         try {
 
             DataBaseHelper dt = new DataBaseHelper(this);
@@ -311,5 +352,14 @@ public class ApplyActivity extends AppCompatActivity {
                 finish();
             }
         }
+    }
+    public String getDate(){
+        Date today = new Date();
+        int abc = today.getYear();
+        return (today.getDate()+"/" +today.getMonth()+"/"+today.getYear());
+    }
+    public void block() {
+        Intent intent = new Intent(this, SetTimePlay.class);
+        startActivity(intent);
     }
 }
