@@ -55,29 +55,29 @@ public class ArrangeActivity extends AppCompatActivity {
     int flag1,flag2;
     int flag = 0;
     Handler handler = new Handler();
-    private Integer image1[] = {R.drawable.a1, R.drawable.truc1};
-    private Integer image2[] = {R.drawable.a2, R.drawable.truc2};
-    private Integer image3[] = {R.drawable.a3, R.drawable.truc3};
-    private Integer image4[] = {R.drawable.a4, R.drawable.truc4};
+//    private Integer image1[] = {R.drawable.a1, R.drawable.truc1};
+//    private Integer image2[] = {R.drawable.a2, R.drawable.truc2};
+//    private Integer image3[] = {R.drawable.a3, R.drawable.truc3};
+//    private Integer image4[] = {R.drawable.a4, R.drawable.truc4};
+//
+//    private Integer image5[] = {R.drawable.mew1, R.drawable.cho1};
+//    private Integer image6[] = {R.drawable.mew2, R.drawable.cho2};
+//    private Integer image7[] = {R.drawable.mew3, R.drawable.cho3};
+//    private Integer image8[] = {R.drawable.mew4, R.drawable.cho4};
+//
+//    private Integer imageMo1[] = {R.drawable.amo1, R.drawable.trucmo1};
+//    private Integer imageMo2[] = {R.drawable.amo2, R.drawable.trucmo4};
+//    private Integer imageMo3[] = {R.drawable.amo3, R.drawable.trucmo2};
+//    private Integer imageMo4[] = {R.drawable.amo4, R.drawable.trucmo3};
+//
+//    private Integer imageMo5[] = {R.drawable.mewmo1, R.drawable.chomo2};
+//    private Integer imageMo6[] = {R.drawable.mewmo2, R.drawable.chomo3};
+//    private Integer imageMo7[] = {R.drawable.mewmo3, R.drawable.chomo4};
+//    private Integer imageMo8[] = {R.drawable.mewmo4, R.drawable.chomo1};
 
-    private Integer image5[] = {R.drawable.mew1, R.drawable.cho1};
-    private Integer image6[] = {R.drawable.mew2, R.drawable.cho2};
-    private Integer image7[] = {R.drawable.mew3, R.drawable.cho3};
-    private Integer image8[] = {R.drawable.mew4, R.drawable.cho4};
 
-    private Integer imageMo1[] = {R.drawable.amo1, R.drawable.trucmo1};
-    private Integer imageMo2[] = {R.drawable.amo2, R.drawable.trucmo4};
-    private Integer imageMo3[] = {R.drawable.amo3, R.drawable.trucmo2};
-    private Integer imageMo4[] = {R.drawable.amo4, R.drawable.trucmo3};
-
-    private Integer imageMo5[] = {R.drawable.mewmo1, R.drawable.chomo2};
-    private Integer imageMo6[] = {R.drawable.mewmo2, R.drawable.chomo3};
-    private Integer imageMo7[] = {R.drawable.mewmo3, R.drawable.chomo4};
-    private Integer imageMo8[] = {R.drawable.mewmo4, R.drawable.chomo1};
-
-
-    private Integer imageTo1[] = {R.drawable.chochay, R.drawable.gau};
-    private Integer imageTo2[] = {R.drawable.mew, R.drawable.chosua};
+//    private Integer imageTo1[] = {R.drawable.chochay, R.drawable.gau};
+//    private Integer imageTo2[] = {R.drawable.mew, R.drawable.chosua};
 
 
     @Override
@@ -301,7 +301,7 @@ public class ArrangeActivity extends AppCompatActivity {
     View.OnDragListener onDragListener = new View.OnDragListener() {
         @Override
         public boolean onDrag(View v, DragEvent event) {
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
             lp.setMargins(0, 0, 0, 0);
             int dragEvent = event.getAction();
             final View view = (View) event.getLocalState();
@@ -325,7 +325,7 @@ public class ArrangeActivity extends AppCompatActivity {
                     btn12.setVisibility(View.VISIBLE);
                     v.setVisibility(View.VISIBLE);
                     if (view.getId() == R.id.img1 && v.getId() == R.id.img11) {
-                        mediaPlayerCach.start();
+//                        mediaPlayerCach.start();
                         flag1++;
                         final ImageView gif = findViewById(R.id.img11);
                         gif.setImageBitmap(source[order]);
@@ -334,7 +334,7 @@ public class ArrangeActivity extends AppCompatActivity {
                             public void run() {
                                 flag++;
                                 if (flag == 10) {
-                                    mediaPlayeryeah.start();
+//                                    mediaPlayeryeah.start();
                                     changeImage();
                                     flag = 0;
 
@@ -566,7 +566,7 @@ public class ArrangeActivity extends AppCompatActivity {
             im.setImageBitmap(source6[order]);
             st4.setVisibility(View.VISIBLE);
             im = (ImageView) findViewById(R.id.sutu4);
-            im.setImageBitmap(source6[order]);
+            im.setImageBitmap(source7[order]);
 
             GifImageView im1 = (GifImageView) findViewById(R.id.imgCho);
             try {
@@ -591,26 +591,26 @@ public class ArrangeActivity extends AppCompatActivity {
             im.setImageBitmap(source8[order]);
             gaub.setVisibility(View.VISIBLE);
             im = (ImageView) findViewById(R.id.img22);
-            im.setImageBitmap(source11[order]);
+            im.setImageBitmap(source9[order]);
             gauc.setVisibility(View.VISIBLE);
             im = (ImageView) findViewById(R.id.img55);
-            im.setImageBitmap(source9[order]);
+            im.setImageBitmap(source10[order]);
             gaud.setVisibility(View.VISIBLE);
             im = (ImageView) findViewById(R.id.img66);
-            im.setImageBitmap(source10[order]);
+            im.setImageBitmap(source11[order]);
 
             sta.setVisibility(View.VISIBLE);
             im = (ImageView) findViewById(R.id.img33);
-            im.setImageBitmap(source13[order]);
+            im.setImageBitmap(source12[order]);
             stb.setVisibility(View.VISIBLE);
             im = (ImageView) findViewById(R.id.img44);
-            im.setImageBitmap(source14[order]);
+            im.setImageBitmap(source13[order]);
             stc.setVisibility(View.VISIBLE);
             im = (ImageView) findViewById(R.id.img77);
-            im.setImageBitmap(source15[order]);
+            im.setImageBitmap(source14[order]);
             std.setVisibility(View.VISIBLE);
             im = (ImageView) findViewById(R.id.img88);
-            im.setImageBitmap(source12[order]);
+            im.setImageBitmap(source15[order]);
             flag1 = 0;
             flag2 = 0;
         } else {

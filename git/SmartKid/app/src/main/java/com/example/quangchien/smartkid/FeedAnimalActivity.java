@@ -112,8 +112,6 @@ public class FeedAnimalActivity extends AppCompatActivity {
         imageView1.setImageBitmap(source[0]);
         imageView1 = findViewById(R.id.feedanimal_img_pikachuwish);
         imageView1.setImageBitmap(source[0]);
-        imageView1 = findViewById(R.id.back);
-        imageView1.setImageBitmap(home);
         LinearLayout ln1 = findViewById(R.id.feedanimal_layout_ponywish);
         ln1.setVisibility(View.INVISIBLE);
         ImageView imageView = findViewById(R.id.feedanimal_thucan);
