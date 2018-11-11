@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
@@ -29,6 +30,8 @@ import pl.droidsonroids.gif.GifImageView;
 public class DifferentActivity extends AppCompatActivity {
     GridView gvImg;
     private static int INPUT = 1;
+    MediaPlayer  mediaPlayerCach;
+    Handler handler = new Handler();
     int thutu = 0;
     Timer T=new Timer();
     int count =0;
@@ -62,12 +65,11 @@ public class DifferentActivity extends AppCompatActivity {
 //    };
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_different);
+          mediaPlayerCach = MediaPlayer.create(DifferentActivity.this, R.raw.yeah);
         try {
             final DataBaseHelper dth = new DataBaseHelper(this);
             TimerTask abc =new TimerTask() {
@@ -133,11 +135,22 @@ public class DifferentActivity extends AppCompatActivity {
         gvImg.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                MediaPlayer  mediaPlayerCach = MediaPlayer.create(DifferentActivity.this, R.raw.cach);
+
                 try {
+
                     if(source[i] == source2[thutu]){
-                        thutu++;
-                        changeImage();
+                        mediaPlayerCach.start();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                thutu++;
+                                changeImage();
+                                mediaPlayerCach.pause();
+                            }
+                        },1000);
+
+
 
                     }
                 }catch (Exception e){
@@ -204,6 +217,9 @@ public class DifferentActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         fl =false;
-
+        Intent intent = new Intent(DifferentActivity.this, MyMusicService.class);
+        if (intent == null) {
+            startService(intent);
+        }
     }
 }

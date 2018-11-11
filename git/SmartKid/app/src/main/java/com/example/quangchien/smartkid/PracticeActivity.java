@@ -25,6 +25,14 @@ public class PracticeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    protected void onStop() {
+        super.onStop();
+        Intent intent = new Intent(PracticeActivity.this,MyMusicService.class);
+        if(intent != null){
+            stopService(intent);
+        }
+    }
+
     public void ClickToHome(View view) {
         finish();
     }
