@@ -25,6 +25,11 @@
                 <!--android:layout_height="match_parent"-->
                 <!--android:src="@drawable/homebutton"-->
                 <!--android:onClick="ClickToFinish"/>-->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/settingbtn"
+                android:onClick="clickToSetting"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
