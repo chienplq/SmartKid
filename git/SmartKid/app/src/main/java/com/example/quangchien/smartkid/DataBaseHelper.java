@@ -119,24 +119,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return result;
     }
     public boolean checkValidImage(String id){
-
+        boolean f = true;
         SQLiteDatabase sqldb = this.getReadableDatabase();
-
-
-        Cursor cursor = sqldb.rawQuery("Select Image from MazeActivity where Name = ?", new String[] {id} );
-        if(cursor == null){
-            cursor.close();
-            return true;
-        }
+        Cursor cursor = sqldb.query("MazeActivity", new String[] {"Name","Image"}, "Name = ?", new String[] { id }, null, null, null, "1");
+        if(cursor.getCount()>0){
+            f = false;
+        } System.out.println("check "+f);
         cursor.close();
         sqldb.close();
-        return false ;
+        return f ;
 
 //        SQLiteDatabase db = this.getReadableDatabase();
 //        Cursor cursor = db.query("MazeActivity", new String[] {"Name","Image"}, "Name = ?", new String[] { id }, null, null, null, null);
 //        return (cursor != null);
     }
     public void insertImage(String name, byte[] image){
+        System.out.println(name);
         SQLiteDatabase db=getWritableDatabase();
         String sql="Insert into MazeActivity values (?,?)";
         SQLiteStatement statement=db.compileStatement(sql);
