@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -150,10 +151,12 @@ public class MazeActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+//        View decorView = getWindow().getDecorView();
+//        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//                | View.SYSTEM_UI_FLAG_FULLSCREEN;
+//        decorView.setSystemUiVisibility(uiOptions);
         setContentView(R.layout.activity_maze);
         createMaze();
         ImageView img1 = findViewById(idMaze[hangKhi][cotKhi]);

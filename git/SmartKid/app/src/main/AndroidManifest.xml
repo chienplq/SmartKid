@@ -60,14 +60,14 @@
         <activity
             android:name=".DifferentActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".PickSamePictureActivity" />
-        <activity android:name=".CongraActivity" />
+        <activity android:name=".PickSamePictureActivity"  android:screenOrientation="landscape"/>
+        <activity android:name=".CongraActivity"  android:screenOrientation="landscape" />
 
         <service
             android:name=".MyMusicService"
             android:exported="false" />
 
-        <activity android:name=".SetTimePlay"></activity>
+        <activity android:name=".SetTimePlay"  android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>
