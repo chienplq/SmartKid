@@ -22,7 +22,9 @@ public class SetTimePlay extends AppCompatActivity {
         try {
             DataBaseHelper dth = new DataBaseHelper(this);
             TextView played = findViewById(R.id.played);
-            played.setText("Hôm nay đã chơi: " + dth.getSumTime(getDate()) +" phút");
+            played.setText("Hôm nay đã chơi: " + dth.getSumTime(getDate())/60 +" phút");
+            TextView playetime = findViewById(R.id.playtime);
+            playetime.setText("Giới hạn hiện tại: " + dth.geLimitTime(getDate())/60 +" phút");
 
 
         } catch (Exception e) {
@@ -42,7 +44,7 @@ public class SetTimePlay extends AppCompatActivity {
                 DataBaseHelper dth = new DataBaseHelper(this);
                 EditText edt1= findViewById(R.id.tgchoi);
                 int num = Integer.parseInt(edt1.getText().toString()) ;
-                dth.setLimitTime(getDate(),num);
+                dth.setLimitTime(getDate(),num*60);
 
             } catch (Exception e) {
                 e.printStackTrace();

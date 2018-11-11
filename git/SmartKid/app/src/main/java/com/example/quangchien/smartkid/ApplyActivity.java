@@ -64,22 +64,17 @@ public class ApplyActivity extends AppCompatActivity {
                         @Override
                         public void run()
                         {if (fl) {
-                            if (count%5==0){
-                                if (dth.geLimitTime(getDate())<=dth.getSumTime(getDate())){
-                                    block();
-                                }
+                            dth.saveTime(getDate());
+                            if (dth.geLimitTime(getDate())<=dth.getSumTime(getDate())){
+                                block();
                             }
-                            if (count == 60) {
-                                dth.saveTime(getDate());
-                                count = 0;
-                            }
-                            count++;
+
                         }
                         }
                     });
                 }
             };
-            T.scheduleAtFixedRate(abc,1000, 1000);
+            T.scheduleAtFixedRate(abc,10000, 10000);
         }
         catch (Exception e) {
             e.printStackTrace();

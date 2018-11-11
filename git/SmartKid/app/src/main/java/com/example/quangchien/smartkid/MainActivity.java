@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     Intent intent;
 
     Timer T=new Timer();
-    int count =0;
+
     Boolean fl = true;
 
     List<Image> list;
@@ -45,20 +45,17 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run()
                         {if (fl) {
-                            if (count == 60) {
                             dth.saveTime(getDate());
-                                count = 0;
-                            }
                             if (dth.geLimitTime(getDate())<=dth.getSumTime(getDate())){
                                 block();
                             }
-                            count++;
+
                         }
                         }
                     });
                 }
             };
-            T.scheduleAtFixedRate(abc,1000, 1000);
+            T.scheduleAtFixedRate(abc,10000, 10000);
         }
         catch (Exception e) {
             e.printStackTrace();
